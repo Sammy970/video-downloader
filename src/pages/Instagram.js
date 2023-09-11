@@ -24,7 +24,7 @@ const Instagram = () => {
   useEffect(() => {
     const getInstaData = async () => {
       const response = await fetch(
-        `https://vdfb.vercel.app/api/insta?link=${instaLink}`
+        `https://vdser.vercel.app/api/insta?link=${instaLink}`
       );
 
       await setDoApiCall(!doApiCall);
