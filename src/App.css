@@ -1,7 +1,26 @@
+@import url("https://api.fontshare.com/v2/css?f[]=array@700,600&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=khand@400,600&display=swap");
+
 .App {
   text-align: center;
-  background-color: #282c34;
+
+  background-image: linear-gradient(
+    111.4deg,
+    rgba(7, 7, 9, 1) 6.5%,
+    rgba(27, 24, 113, 1) 93.2%
+  );
+
   min-height: 100vh;
   display: flex;
   align-items: center;
+}
+
+.facebook {
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
 }
