@@ -17,11 +17,17 @@ const Facebook = () => {
   const [fbVideoLink, setFbVideoLink] = useState("");
   const [doApiCall, setDoApiCall] = useState(false);
   const [resFbData, setResFbData] = useState("");
+  const [errorState, setErrorState] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   const submitHandler = () => {
     // console.log(fbVideoLink);
+    if (fbVideoLink.trim === "") {
+      setErrorState(!errorState);
+      return;
+    }
+    setErrorState(!errorState);
     setLoading(!loading);
     setDoApiCall(!doApiCall);
   };
@@ -82,7 +88,7 @@ const Facebook = () => {
             value={fbVideoLink}
             onChange={(e) => setFbVideoLink(e.target.value)}
           />
-          {loading && doApiCall ? (
+          {loading && doApiCall && !errorState ? (
             <FontAwesomeIcon
               icon={faSpinner}
               spinPulse
@@ -91,6 +97,9 @@ const Facebook = () => {
             />
           ) : (
             <Button onClick={submitHandler}>Submit</Button>
+          )}
+          {errorState && (
+            <p style={{ marginTop: "20px" }}>Don't Leave it empty</p>
           )}
         </FormControl>
 
