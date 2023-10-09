@@ -17,11 +17,17 @@ const Instagram = () => {
   const [instaLink, setInstaLink] = useState("");
   const [doApiCall, setDoApiCall] = useState(false);
   const [resInstaData, setResInstaData] = useState("");
+  const [errorState, setErrorState] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   const submitHandler = () => {
     // console.log(instaLink);
+
+    if (instaLink.trim === "") {
+      setErrorState(!errorState);
+      return;
+    }
     setLoading(!loading);
     setDoApiCall(!doApiCall);
   };
@@ -82,7 +88,7 @@ const Instagram = () => {
             value={instaLink}
             onChange={(e) => setInstaLink(e.target.value)}
           />
-          {loading && doApiCall ? (
+          {loading && doApiCall && !errorState ? (
             <FontAwesomeIcon
               icon={faSpinner}
               spinPulse
@@ -91,6 +97,9 @@ const Instagram = () => {
             />
           ) : (
             <Button onClick={submitHandler}>Submit</Button>
+          )}
+          {errorState && (
+            <p style={{ marginTop: "20px" }}>Don't Leave it empty</p>
           )}
         </FormControl>
 
