@@ -19,7 +19,7 @@ const Root = () => {
         margin={"auto"}
         justifyContent={"center"}
         gap={{ base: 4, md: 20 }}
-        templateColumns={"1fr 1fr 1fr"}
+        templateColumns={"1fr 1fr"}
       >
         <GridItem>
           <Button>
@@ -29,11 +29,6 @@ const Root = () => {
         <GridItem>
           <Button>
             <Link to={"/insta"}>Instagram</Link>
-          </Button>
-        </GridItem>
-        <GridItem>
-          <Button>
-            <Link to={"/youtube"}>Youtube</Link>
           </Button>
         </GridItem>
       </Grid>

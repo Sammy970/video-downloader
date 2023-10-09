@@ -9,6 +9,8 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 const Facebook = () => {
@@ -16,8 +18,11 @@ const Facebook = () => {
   const [doApiCall, setDoApiCall] = useState(false);
   const [resFbData, setResFbData] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const submitHandler = () => {
     // console.log(fbVideoLink);
+    setLoading(!loading);
     setDoApiCall(!doApiCall);
   };
 
@@ -28,6 +33,7 @@ const Facebook = () => {
       );
 
       await setDoApiCall(!doApiCall);
+      await setLoading(!loading);
 
       // await console.log(response.ok);
       const resData = await response.json();
@@ -40,7 +46,7 @@ const Facebook = () => {
     } else {
       return; //
     }
-  }, [fbVideoLink, doApiCall]);
+  }, [fbVideoLink, doApiCall, loading]);
 
   return (
     <Card
@@ -76,33 +82,47 @@ const Facebook = () => {
             value={fbVideoLink}
             onChange={(e) => setFbVideoLink(e.target.value)}
           />
-          <Button onClick={submitHandler}>Submit</Button>
+          {loading && doApiCall ? (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spinPulse
+              size="2xl"
+              style={{ color: "#f5f5f5" }}
+            />
+          ) : (
+            <Button onClick={submitHandler}>Submit</Button>
+          )}
         </FormControl>
 
-        {resFbData && (
+        {resFbData && !loading && (
           <HStack justifyContent={"center"} gap={10}>
-            <Link
-              p={3}
-              backgroundColor={"white"}
-              borderRadius={5}
-              color={"#171717"}
-              fontWeight={"bold"}
-              target="_blank"
-              href={resFbData.hd}
-            >
-              Download HD
-            </Link>
-            <Link
-              p={3}
-              backgroundColor={"white"}
-              borderRadius={5}
-              color={"#171717"}
-              fontWeight={"bold"}
-              target="_blank"
-              href={resFbData.sd}
-            >
-              Download SD
-            </Link>
+            {resFbData.hd && (
+              <Link
+                p={3}
+                backgroundColor={"white"}
+                borderRadius={5}
+                color={"#171717"}
+                fontWeight={"bold"}
+                target="_blank"
+                href={resFbData.hd}
+              >
+                Download HD
+              </Link>
+            )}
+
+            {resFbData.sd && (
+              <Link
+                p={3}
+                backgroundColor={"white"}
+                borderRadius={5}
+                color={"#171717"}
+                fontWeight={"bold"}
+                target="_blank"
+                href={resFbData.sd}
+              >
+                Download SD
+              </Link>
+            )}
           </HStack>
         )}
       </CardBody>

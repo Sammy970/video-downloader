@@ -9,6 +9,8 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 const Instagram = () => {
@@ -16,8 +18,11 @@ const Instagram = () => {
   const [doApiCall, setDoApiCall] = useState(false);
   const [resInstaData, setResInstaData] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const submitHandler = () => {
     // console.log(instaLink);
+    setLoading(!loading);
     setDoApiCall(!doApiCall);
   };
 
@@ -28,6 +33,7 @@ const Instagram = () => {
       );
 
       await setDoApiCall(!doApiCall);
+      await setLoading(!loading);
 
       // await console.log(response.ok);
       const resData = await response.json();
@@ -40,7 +46,7 @@ const Instagram = () => {
     } else {
       return; //
     }
-  }, [instaLink, doApiCall]);
+  }, [instaLink, doApiCall, loading]);
 
   return (
     <Card
@@ -76,10 +82,19 @@ const Instagram = () => {
             value={instaLink}
             onChange={(e) => setInstaLink(e.target.value)}
           />
-          <Button onClick={submitHandler}>Submit</Button>
+          {loading && doApiCall ? (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spinPulse
+              size="2xl"
+              style={{ color: "#f5f5f5" }}
+            />
+          ) : (
+            <Button onClick={submitHandler}>Submit</Button>
+          )}
         </FormControl>
 
-        {resInstaData && (
+        {resInstaData && !loading && (
           <HStack justifyContent={"center"} gap={10}>
             <Link
               p={3}
